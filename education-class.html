@@ -1,0 +1,54 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="education-class">
+  <template>
+    <iron-ajax id="loadClass" 
+      handle-as="json"
+      url="data/class.json"
+      on-response="_handlLoadClass">
+    </iron-ajax>
+    <iron-ajax id="loadLevel" 
+      handle-as="json"
+      url="data/level.json"
+      on-response="_handlLoadLevel">
+    </iron-ajax>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'education-class',
+    properties: {
+      classes: Array,
+      levels: Array
+    },
+    ready: function() {
+      this.$.loadClass.generateRequest();
+      this.$.loadLevel.generateRequest();
+    },
+    echo: function(text){
+      return "Hello " + text;
+    },
+    _handlLoadClass: function(){
+      this.classes = this.$.loadClass.lastResponse;
+    },
+    _handlLoadLevel: function(){
+      this.levels = this.$.loadLevel.lastResponse;
+    },
+    getClass: function(level){
+      if(this.classes){
+        return this.classes.filter(function(obj){
+          return obj.level == level;
+        });
+      }
+      return [];
+    },
+    getAllClass: function(){
+      return this.classes;
+    },
+    getAllLevel: function(){
+      return this.levels;
+    }
+  });
+</script>
