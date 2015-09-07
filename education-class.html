@@ -36,10 +36,17 @@
     _handlLoadLevel: function(){
       this.levels = this.$.loadLevel.lastResponse;
     },
-    getClass: function(level){
+    getClass: function(levels){
+      console.log(levels)
       if(this.classes){
         return this.classes.filter(function(obj){
-          return obj.level == level;
+          var isContain = false;
+          for(var i = 0; i < levels.length; i++){
+            if(obj.level == levels[i]){
+              isContain = true; break;
+            }
+          }
+          return isContain;
         });
       }
       return [];

@@ -41,11 +41,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
         document.querySelector('button').addEventListener('click', function() {
           // call function
-          //var data = document.querySelector('education-class').getClass('ประถมศึกษาตอนปลาย');
-          var data = document.querySelector('education-class').getAllClass();
+          var classes = ["ประถมศึกษาตอนปลาย","ประถมศึกษาตอนต้น"]
+          var data = document.querySelector('education-class').getClass(classes);
+          //var data = document.querySelector('education-class').getAllClass();
           //var data = document.querySelector('education-class').getAllLevel();
           
           // show output
+          console.log(data)
           var toString = data.map(function(obj){
             if(obj.sname){
               return "name: " + obj.name + "  short name: " + obj.sname;
