@@ -21,7 +21,15 @@
     is: 'education-class',
     properties: {
       classes: Array,
-      levels: Array
+      levels: Array,
+	  result: {
+		type: Array,
+		notify: true
+	  },
+	  filter: {
+		type: Array,
+		observer: "_handleLevelChanged"
+	  }
     },
     ready: function() {
       this.$.loadClass.generateRequest();
@@ -30,16 +38,19 @@
     echo: function(text){
       return "Hello " + text;
     },
+	_handleLevelChanged: function(){
+	  this.getClass(this.filter);
+	},
     _handlLoadClass: function(){
       this.classes = this.$.loadClass.lastResponse;
+	  this.getClass(this.filter);
     },
     _handlLoadLevel: function(){
       this.levels = this.$.loadLevel.lastResponse;
     },
     getClass: function(levels){
-      console.log(levels)
       if(this.classes){
-        return this.classes.filter(function(obj){
+        this.result = this.classes.filter(function(obj){
           var isContain = false;
           for(var i = 0; i < levels.length; i++){
             if(obj.level == levels[i]){
@@ -49,7 +60,9 @@
           return isContain;
         });
       }
-      return [];
+      else{
+		this.result = [];
+	  }
     },
     getAllClass: function(){
       return this.classes;
